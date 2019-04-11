@@ -5,7 +5,12 @@ var bodyParser = require('body-parser');
 
 // Importar Rutas
 var appRoutes = require('./routes/app');
+var hospitalRoutes = require('./routes/hospital');
+var medicoRoutes = require('./routes/medico');
 var usuarioRoutes = require('./routes/usuario');
+var busquedaRoutes = require('./routes/busqueda');
+var uploadRoutes = require('./routes/upload');
+var imagenesRoutes = require('./routes/imagenes');
 var loginRoutes = require('./routes/login');
 
 
@@ -14,8 +19,9 @@ var app = express();
 
 
 // Body Parser
-// parse application/x-www-form-urlencoded
-// parse application/json
+// transforma los parametros de la request en un objeto body
+// app usa un parser para application/x-www-form-urlencoded
+// app usa un parser para application/json
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
@@ -41,8 +47,19 @@ mongoose.connect(
     });
 
 
+// Server index config
+// var serveIndex = require('serve-index');
+// app.use(express.static(__dirname + '/'));
+// app.use('/uploads', serveIndex(__dirname + '/uploads'));
+
+
 // Rutas
+app.use('/hospital', hospitalRoutes);
+app.use('/medico', medicoRoutes);
 app.use('/usuario', usuarioRoutes);
+app.use('/busqueda', busquedaRoutes);
+app.use('/upload', uploadRoutes);
+app.use('/img', imagenesRoutes);
 app.use('/login', loginRoutes);
 app.use('/', appRoutes);
 
